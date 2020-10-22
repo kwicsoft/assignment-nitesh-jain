@@ -1,4 +1,4 @@
-# Kabs frontend coding task
+# kwicsoft frontend coding task
 The goal is to implement an application to manage working tasks. See the __[user stories](#user-stories)__ for the application details to be implemented.
 
 Clone this repository and create a [git bundle](https://git-scm.com/docs/git-bundle) and send it to us when you finished the task. One of the most important topics we want to see, is how you commit your progress. This does not mean every commit has to be perfect.
