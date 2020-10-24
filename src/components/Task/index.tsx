@@ -6,7 +6,9 @@ import {
 } from 'reactstrap';
 import ModalPopup from "./../Popup";
 import "./Task.css";
-
+/**
+ * Props Option Which Recived By Url From Router
+ */
 interface TaskProps {
     taskId?: string;
     userId?: string;
@@ -70,7 +72,12 @@ export default class Task extends React.Component<TaskProps, TaskState>{
         const data = JSON.parse(localStorage.getItem("taskData") as string);
         this.setState({ taskList: data || [] });
     }
-    changeEvent = (e: any, x: any) => {
+    /**
+     * 
+     * @param e : check event type  
+     * @param x : task json
+     */
+    changeEvent = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, x: any) => {
         const { inputList } = { ...this.state };
         if (e.target) {
             inputList[x.index].value = "";
@@ -85,6 +92,9 @@ export default class Task extends React.Component<TaskProps, TaskState>{
             this.setState({ inputList: inputList })
         }
     }
+    /**
+     * Add Task Data
+     */
     saveEvent = ()=> {
 
         const { taskList, inputList } = { ...this.state };
@@ -108,7 +118,9 @@ export default class Task extends React.Component<TaskProps, TaskState>{
         localStorage.setItem("taskData", JSON.stringify(taskList))
         this.setState({ taskList: taskList, isOpen: false, inputList: inputList });
     }
-
+    /**
+     * Popup Opent Event
+     */
     openPopup = () => {
         const { inputList } = { ...this.state };
         const cloneData = JSON.parse(JSON.stringify(inputList));
@@ -118,9 +130,10 @@ export default class Task extends React.Component<TaskProps, TaskState>{
         })
         this.setState({ isOpen: true, inputList: cloneData, isEdit: false });
     }
-    renderPopup = () => {
-
-    }
+    /**
+     * 
+     * @param x : Task Json Which Update
+     */
     updateData = (x: any) => {
         const { taskList, inputList } = { ...this.state };
         const userID = this.props.userId;
@@ -133,7 +146,11 @@ export default class Task extends React.Component<TaskProps, TaskState>{
         this.setState({ taskList: taskList, isEdit: false });
 
     }
-    statusChnage = (e: any) => {
+    /**
+     * 
+     * @param e : Handle Dropdown Event
+     */
+    statusChnage = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { taskList } = { ...this.state };
         const taskID = this.props.taskId;
         const userID = this.props.userId;
@@ -146,6 +163,9 @@ export default class Task extends React.Component<TaskProps, TaskState>{
             this.setState({ taskList: taskList, isStatusChange: false });
         }
     }
+    /**
+     * Render Navigation Menu
+     */
     renterHeader = (): JSX.Element => {
         return (
             <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
