@@ -1,0 +1,29 @@
+.task{
+   background-color: #e4e0e0 !important;
+   padding-bottom: 42px;
+}
+.task-header {
+   text-align: end;
+}
+.error{
+   color: red;
+}
+.custorm-drop-down{
+    padding: 0px !important;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #6c757d;
+    background-clip: padding-box;
+    border: 0px !important;
+    border-radius: 0px!important;
+}
+img{
+   width: 30px;
+}
+.card > img{
+   width: 90px;
+}
+.profile-close{
+   position: absolute;
+   right: 0px;
+}
