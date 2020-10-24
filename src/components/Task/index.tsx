@@ -90,7 +90,7 @@ export default class Task extends React.Component<TaskProps, TaskState>{
         const { taskList, inputList } = { ...this.state };
         let dateTask = new Date();
         taskList.push({
-            taskId: taskList.length,
+            taskId: taskList.length.toString(),
             taskTitle: inputList[0].value,
             active: false,
             createBy: this.props.userId || "0",
@@ -98,7 +98,7 @@ export default class Task extends React.Component<TaskProps, TaskState>{
             taskDescription: inputList[1].value,
             taskStatus: "ToDo",
             taskUpdateDate: "",
-            taskCreateDate: dateTask.toDateString(),
+            taskCreateDate: dateTask.toUTCString(),
             taskAssign: undefined
         })
         inputList.forEach(x => {
@@ -125,10 +125,10 @@ export default class Task extends React.Component<TaskProps, TaskState>{
         const { taskList, inputList } = { ...this.state };
         const userID = this.props.userId;
         let dateTask = new Date();
-        taskList[x.taskId].taskTitle = inputList[0].value;
-        taskList[x.taskId].taskDescription = inputList[1].value;
-        taskList[x.taskId].updateBy = userID;
-        taskList[x.taskId].taskUpdateDate = dateTask.toDateString();
+        taskList[parseInt(x.taskId)].taskTitle = inputList[0].value;
+        taskList[parseInt(x.taskId)].taskDescription = inputList[1].value;
+        taskList[parseInt(x.taskId)].updateBy = userID;
+        taskList[parseInt(x.taskId)].taskUpdateDate = dateTask.toUTCString();
         localStorage.setItem("taskData", JSON.stringify(taskList))
         this.setState({ taskList: taskList, isEdit: false });
 
@@ -141,7 +141,7 @@ export default class Task extends React.Component<TaskProps, TaskState>{
         if (e.target && e.target.value && taskID && userID && e.target.value !== "Select") {
             taskList[parseInt(taskID)].taskStatus = e.target.value;
             taskList[parseInt(taskID)].updateBy = userID;
-            taskList[parseInt(taskID)].taskUpdateDate = dateTask.toDateString();
+            taskList[parseInt(taskID)].taskUpdateDate = dateTask.toUTCString();
             localStorage.setItem("taskData", JSON.stringify(taskList))
             this.setState({ taskList: taskList, isStatusChange: false });
         }
@@ -235,8 +235,8 @@ export default class Task extends React.Component<TaskProps, TaskState>{
                                                                     x.error = undefined;
                                                                 })
 
-                                                                inputList[0].value = taskList[x.taskId].taskTitle;
-                                                                inputList[1].value = taskList[x.taskId].taskDescription;
+                                                                inputList[0].value = taskList[parseInt(x.taskId)].taskTitle;
+                                                                inputList[1].value = taskList[parseInt(x.taskId)].taskDescription;
                                                                 this.setState({ inputList: inputList });
                                                                 //this.redirectNewUrl("/task/"+(this.props.userId?this.props.userId:"0")+"/"+x.taskId)
 
@@ -255,10 +255,10 @@ export default class Task extends React.Component<TaskProps, TaskState>{
                                             </div>
                                             {this.props.taskId === x.taskId && (<>
                                                 {!isEdit && <div className={"task p-3"}><Button data-testid="task-edit-button" onClick={() => {
-                                                    inputList[0].value = taskList[x.taskId].taskTitle;
+                                                    inputList[0].value = taskList[parseInt(x.taskId)].taskTitle;
                                                     inputList[0].error = undefined;
                                                     inputList[1].error = undefined;
-                                                    inputList[1].value = taskList[x.taskId].taskDescription;
+                                                    inputList[1].value = taskList[parseInt(x.taskId)].taskDescription;
                                                     this.setState({ isEdit: true, inputList: inputList })
 
                                                 }
@@ -308,7 +308,7 @@ export default class Task extends React.Component<TaskProps, TaskState>{
                                     <CardBody>
                                         <CardTitle>Task Id-: {this.props.taskId}</CardTitle>
                                         <CardSubtitle>Task Title-: {cardData.taskTitle}</CardSubtitle>
-                                        <CardSubtitle>Task Create Date-: {cardData.taskCreateDate}</CardSubtitle>
+                                        <CardSubtitle>Task Create Date-: {(new Date(cardData.taskCreateDate)).toString()}</CardSubtitle>
                                         <br />
                                         {cardData.taskStatus !== TaskStatus.Deployed && (<CardSubtitle>Change Status : {!isStatusChange && <Button data-testid="change-status" onClick={() => this.setState({ isStatusChange: true })}>Edit</Button>}
                                             {isStatusChange && <Input key={cardData.taskStatus} type="select" name="select" data-testid="exampleSelect" id="exampleSelect" onChange={this.statusChnage}>
@@ -323,7 +323,7 @@ export default class Task extends React.Component<TaskProps, TaskState>{
                                         </CardSubtitle>)}
                                         <CardSubtitle>Created By-: {cardData.createBy}</CardSubtitle>
                                         {cardData.updateBy !== "" && <CardSubtitle>Update By-: {cardData.updateBy}</CardSubtitle>}
-                                        {cardData.updateBy !== "" && <CardSubtitle>Update By-: {cardData.taskUpdateDate}</CardSubtitle>}
+                                        {cardData.updateBy !== "" && <CardSubtitle>Update By-: {(new Date(cardData.taskUpdateDate)).toString()}</CardSubtitle>}
                                     </CardBody>
                                 </Card>
                             </div>
