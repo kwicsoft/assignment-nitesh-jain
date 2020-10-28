@@ -2,6 +2,9 @@
    background-color: #e4e0e0 !important;
    padding-bottom: 42px;
 }
+.task-button{
+   background-color: #e4e0e0 !important;
+}
 .task-header {
    text-align: end;
 }
